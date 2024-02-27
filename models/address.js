@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Address extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,64 +9,66 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Address, { foreignKey: "UserId" });
+      Address.belongsTo(models.User, { foreignKey: "UserId" });
     }
   }
-  User.init(
+  Address.init(
     {
-      name: {
+      address: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Please enter your name",
+            msg: "Please insert your address",
           },
           notNull: {
-            msg: "Please enter your name",
+            msg: "Please insert your address",
           },
         },
       },
-      email: {
+      province: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Please enter your email",
+            msg: "Please select your province",
           },
           notNull: {
-            msg: "Please enter your email",
+            msg: "Please select your province",
           },
         },
       },
-      password: {
+      city: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Please enter your password",
+            msg: "Insert your city",
           },
           notNull: {
-            msg: "Please enter your password",
+            msg: "Insert your city",
           },
         },
       },
-      phone_number: {
-        type: DataTypes.STRING,
+      detail: DataTypes.STRING,
+      zipcode: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: "Please enter your phone number",
+            msg: "Please insert your zip code",
           },
           notNull: {
-            msg: "Please enter your phone number",
+            msg: "Please insert your zip code",
           },
         },
       },
+      UserId: DataTypes.INTEGER,
     },
     {
       sequelize,
-      modelName: "User",
+      modelName: "Address",
     }
   );
-  return User;
+  return Address;
 };
